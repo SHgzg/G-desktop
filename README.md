@@ -1,4 +1,4 @@
-# g-desktop
+# G-desktop
 
 An Electron application with React and TypeScript
 
