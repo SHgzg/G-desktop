@@ -1,6 +1,11 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+// import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+
+// 手动实现is检查，避免版本兼容性问题
+const is = {
+  dev: process.env.NODE_ENV === 'development' || !process.env.ELECTRON_IS_PROD,
+}
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -13,15 +18,15 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
-    }
+      sandbox: false,
+    },
   })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
 
-  mainWindow.webContents.setWindowOpenHandler((details) => {
+  mainWindow.webContents.setWindowOpenHandler(details => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
@@ -39,14 +44,25 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  // Set app user model id for windows (Windows only)
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('com.electron')
+  }
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+    // 开发环境下允许快捷键
+    if (is.dev) {
+      window.webContents.on('before-input-event', (_, input) => {
+        if (input.key === 'F12') {
+          window.webContents.toggleDevTools()
+        }
+        if (input.control && input.key === 'r') {
+          window.webContents.reload()
+        }
+      })
+    }
   })
 
   // IPC test

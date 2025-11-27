@@ -1,20 +1,23 @@
 # Git高级用法学习笔记
 
 ## 概述
+
 Git 是分布式版本控制系统，掌握高级用法可以大幅提升开发效率。本笔记基于实际项目操作经验，涵盖Git的进阶技巧和最佳实践。
 
 ## 核心概念
 
 ### Git 三个工作区域
+
 - **工作目录(Working Directory)**: 实际文件的所在地
 - **暂存区(Staging Area)**: 存放即将提交的更改
 - **Git仓库(.git)**: 永久保存数据的地方
 
 ### 分支类型
+
 - **主分支(main/master)**: 正式发布分支
 - **开发分支(develop)**: 开发集成分支
-- **功能分支(feature/*)**: 新功能开发
-- **修复分支(hotfix/*)**: 紧急修复
+- **功能分支(feature/\*)**: 新功能开发
+- **修复分支(hotfix/\*)**: 紧急修复
 - **临时分支**: 如我们之前使用的 `temp-branch`
 
 ## 关键知识点
@@ -22,6 +25,7 @@ Git 是分布式版本控制系统，掌握高级用法可以大幅提升开发�
 ### 1. 提交操作与回滚
 
 #### 撤回所有提交到工作区（我们实际使用的方案）
+
 ```bash
 # 方法1: Orphan Branch 方法（推荐用于初始提交回滚）
 git checkout --orphan temp-branch
@@ -37,6 +41,7 @@ git reset --soft HEAD~2   # 撤回2个提交，保留文件在暂存区
 ```
 
 #### 修改历史commit信息
+
 ```bash
 # 修改最近的commit信息
 git commit --amend -m "新的提交信息"
@@ -52,6 +57,7 @@ git rebase -i <commit的父提交hash>
 ### 2. 远程仓库管理
 
 #### 为本地项目创建全新远程仓库
+
 ```bash
 # 1. 在GitHub/GitLab创建空仓库（不要添加README、.gitignore等）
 
@@ -69,6 +75,7 @@ git push origin main
 ```
 
 #### 远程仓库操作
+
 ```bash
 # 查看远程仓库
 git remote -v
@@ -91,6 +98,7 @@ git push -u origin feature-branch
 ### 3. 分支管理高级技巧
 
 #### 我们实际使用过的分支操作
+
 ```bash
 # 创建并切换到新分支
 git checkout -b main
@@ -109,6 +117,7 @@ git commit -m "Merge with conflict resolution"
 ```
 
 #### 分支对比和差异
+
 ```bash
 # 比较分支差异
 git diff main..feature-branch
@@ -164,6 +173,7 @@ git blame filename  # 查看文件每行的最后修改者
 ## 实践示例
 
 ### 示例1: 初始化项目并推送到远程（我们项目的完整流程）
+
 ```bash
 # 1. 初始化本地项目
 git init
@@ -183,6 +193,7 @@ git push origin main
 ```
 
 ### 示例2: 完全重置项目状态
+
 ```bash
 # 当需要完全重新开始时
 git checkout --orphan temp-branch
@@ -194,6 +205,7 @@ git push -f origin main  # 强制推送
 ```
 
 ### 示例3: 修改历史commit（修正提交信息错误）
+
 ```bash
 # 发现最近3个commit中有信息错误
 git rebase -i HEAD~3
@@ -209,6 +221,7 @@ git rebase -i HEAD~3
 ## 进阶技巧
 
 ### 1. Git Hooks 自动化
+
 ```bash
 # 安装pre-commit hook进行代码检查
 echo '#!/bin/sh
@@ -218,6 +231,7 @@ chmod +x .git/hooks/pre-commit
 ```
 
 ### 2. Git 别名提升效率
+
 ```bash
 git config --global alias.st status
 git config --global alias.co checkout
@@ -228,6 +242,7 @@ git config --global alias.last 'log -1 HEAD'
 ```
 
 ### 3. 子模块管理
+
 ```bash
 # 添加子模块
 git submodule add https://github.com/user/repo.git path/to/submodule
@@ -238,6 +253,7 @@ git submodule update --init --recursive
 ```
 
 ### 4. 工作树管理
+
 ```bash
 # 创建多个工作目录
 git worktree add ../feature-branch feature-branch
@@ -248,6 +264,7 @@ git worktree remove ../feature-branch
 ## 常见问题
 
 ### 问题1: 提交后发现忘记添加文件
+
 ```bash
 # 方案1: 添加到当前commit
 git add forgotten-file
@@ -259,6 +276,7 @@ git commit -m "fix: 添加遗漏的文件"
 ```
 
 ### 问题2: 推送被拒绝（non-fast-forward）
+
 ```bash
 # 先拉取远程更新
 git pull origin main
@@ -270,6 +288,7 @@ git push -f origin main
 ```
 
 ### 问题3: 误删分支需要恢复
+
 ```bash
 # 查找被删除的分支
 git reflog
@@ -281,6 +300,7 @@ git checkout -b recovered-branch <commit-hash>
 ## 总结
 
 ### 重点回顾
+
 - **Git三个区域**: 工作区、暂存区、仓库区
 - **Orphan Branch**: 处理初始提交回退的最佳方案
 - **Rebase vs Merge**: 前者保持线性历史，后者保留分支历史
@@ -288,6 +308,7 @@ git checkout -b recovered-branch <commit-hash>
 - **历史修改**: amend、rebase的用法和注意事项
 
 ### 学习建议
+
 1. **先掌握基础**: add、commit、push、pull
 2. **实践分支管理**: feature分支工作流
 3. **学会回滚**: reset、revert、checkout的区别
@@ -295,6 +316,7 @@ git checkout -b recovered-branch <commit-hash>
 5. **了解高级特性**: rebase、stash、worktree等
 
 ### 练习推荐
+
 1. 在测试项目中练习所有回滚操作
 2. 创建多个分支并练习合并冲突解决
 3. 配置Git aliases提升日常效率
@@ -308,6 +330,7 @@ git checkout -b recovered-branch <commit-hash>
 - [Git Interactive Rebase Tool](https://gitrebasetool.herokuapp.com/)
 
 ---
-*文档创建时间: 2025-11-26*
-*基于 G-desktop 项目实际操作经验*
-*最后更新时间: 2025-11-26*
+
+_文档创建时间: 2025-11-26_
+_基于 G-desktop 项目实际操作经验_
+_最后更新时间: 2025-11-26_

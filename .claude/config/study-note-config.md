@@ -1,6 +1,7 @@
 # 学习笔记配置
 
 ## 基本信息
+
 - **配置名称**: 学习笔记生成配置
 - **版本**: 1.0.0
 - **创建时间**: 2025-11-26
@@ -9,92 +10,116 @@
 ## 配置规则
 
 ### 存储配置
+
 ```yaml
 storage:
-  directory: ".claude/study-note/"
-  format: "markdown"
-  encoding: "UTF-8"
+  directory: '.claude/study-note/'
+  format: 'markdown'
+  encoding: 'UTF-8'
   auto_create_directory: true
 ```
 
 ### 文件命名规则
+
 ```yaml
 naming:
-  pattern: "{topic}-学习笔记.md"
-  pattern_en: "{topic}-study-notes.md"
-  separator: "-"
+  pattern: '{topic}-学习笔记.md'
+  pattern_en: '{topic}-study-notes.md'
+  separator: '-'
   max_length: 100
-  special_chars: ["-", "_"]
-  avoid_chars: ["#", "@", "!", "&", "%", "$"]
+  special_chars: ['-', '_']
+  avoid_chars: ['#', '@', '!', '&', '%', '$']
 ```
 
 ### 内容结构模板
-```markdown
+
+````markdown
 # {topic}学习笔记
 
 ## 概述
+
 - 简要介绍学习主题的背景和重要性
 - 学习目标和预期收获
 
 ## 核心概念
+
 ### 概念1
+
 - 定义和说明
 - 应用场景
 
 ### 概念2
+
 - 定义和说明
 - 应用场景
 
 ## 关键知识点
+
 ### 知识点1
+
 #### 基本原理
+
 - 详细解释
 - 图示说明（如果适用）
 
 #### 代码示例
+
 ```language
 // 示例代码
 ```
+````
 
 #### 注意事项
+
 - 常见陷阱
 - 最佳实践
 
 ### 知识点2
+
 [重复上述结构]
 
 ## 实践示例
+
 ### 示例1：{具体场景}
+
 - 问题描述
 - 解决方案
 - 实现步骤
 - 结果验证
 
 ### 示例2：{具体场景}
+
 [重复上述结构]
 
 ## 进阶技巧
+
 - 性能优化建议
 - 扩展应用
 - 相关技术整合
 
 ## 常见问题
+
 ### 问题1：{常见问题描述}
+
 - 原因分析
 - 解决方案
 - 预防措施
 
 ## 总结
+
 ### 重点回顾
+
 - 核心要点总结
 - 关键技能清单
 
 ### 学习建议
+
 - 学习路径建议
 - 练习推荐
 - 相关资源推荐
 
 ## 参考资料
+
 - 官方文档
 - 相关教程
 - 推荐书籍
@@ -102,9 +127,11 @@ naming:
 - 视频教程
 
 ---
-*文档创建时间: {current_date}*
-*最后更新时间: {current_date}*
-```
+
+_文档创建时间: {current_date}_
+_最后更新时间: {current_date}_
+
+````
 
 ### 生成触发条件
 ```yaml
@@ -121,13 +148,13 @@ triggers:
     - "帮我整理(.+)的学习笔记"
     - "我想学习(.+)，请生成笔记"
     - "(.+)学习笔记"
-```
+````
 
 ### 自动化流程
+
 ```yaml
 workflow:
-  steps:
-    1. 检测用户请求是否匹配触发条件
+  steps: 1. 检测用户请求是否匹配触发条件
     2. 解析学习主题
     3. 生成标准化文件名
     4. 创建学习笔记内容
@@ -137,6 +164,7 @@ workflow:
 ```
 
 ### 质量要求
+
 ```yaml
 quality:
   requirements:
@@ -154,13 +182,16 @@ quality:
 ```
 
 ## 示例输出
+
 - **文件位置**: `.claude/study-note/React-Hooks学习笔记.md`
 - **文件大小**: 通常 3-10KB
 - **预计生成时间**: 30-60秒
 
 ## 相关配置文件
+
 - [配置生成规则](./config-generation-rules.md)
 - [主配置索引](../CLAUDE.md)
 
 ---
-*配置文件版本: 1.0.0*
+
+_配置文件版本: 1.0.0_

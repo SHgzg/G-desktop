@@ -6,9 +6,7 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
   "permissions": {
-    "allow": [
-      "Bash(mkdir:*)"
-    ],
+    "allow": ["Bash(mkdir:*)", "Bash(npx shadcn@latest add:*)"],
     "deny": [],
     "ask": []
   }
