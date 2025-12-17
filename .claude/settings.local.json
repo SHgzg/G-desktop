@@ -6,7 +6,11 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
   "permissions": {
-    "allow": ["Bash(mkdir:*)", "Bash(npx shadcn@latest add:*)"],
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(pnpm add recharts)"
+    ],
     "deny": [],
     "ask": []
   }

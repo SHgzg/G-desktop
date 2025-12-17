@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { join } from 'path'
 // import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
@@ -6,7 +6,6 @@ import { join } from 'path'
 const is = {
   dev: process.env.NODE_ENV === 'development' || !process.env.ELECTRON_IS_PROD,
 }
-import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
   // Create the browser window.
@@ -15,7 +14,6 @@ function createWindow(): void {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -30,6 +28,14 @@ function createWindow(): void {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
+
+  // const mainWindow = new BaseWindow({ width: 800, height: 400 })
+  // for (let index = 0; index < 4; index++) {
+  //   const view = new WebContentsView()
+  //   mainWindow.contentView.addChildView(view)
+  //   view.webContents.loadURL('https://electronjs.org')
+  //   view.setBounds({ x: 400 * index, y: 0, width: 400, height: 400 })
+  // }
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
